@@ -64,7 +64,8 @@ contract Deviser is owned {
     
     function pay(address _to, uint _amount) public onlyOwner {
         require(_amount <= this.balance);
-        _to.send(_amount);
+        heartbeat();
+        require(_to.call.gas(3000000).value(_amount)());
         Outcome(_to, _amount);
     }
     
